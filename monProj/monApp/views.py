@@ -1,7 +1,7 @@
 from django.shortcuts import HttpResponse 
 
 def home(request,param=""):
-    return HttpResponse("<h1>Bonjour " + param + " !<h2>")
+    return HttpResponse("<h1>Bonjour " + param + " !</h1>")
 
 def contactus(request):
     return HttpResponse("<h1>Contact Us</h1>")

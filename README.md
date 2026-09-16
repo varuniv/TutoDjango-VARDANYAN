@@ -13,6 +13,10 @@ Lancement :
     manage.py runserver
 
 TD1
-Petit challenge à faire
+
 couverture des tests
 ![alt text](images/image.png)
+
+couverture de home, contact et about 
+
+![alt text](images/couverture,home,about.png)
