@@ -12,8 +12,13 @@ class Produit(models.Model):
     intituleProd = models.CharField(max_length=200)
     prixUnitaireProd = models.DecimalField(max_digits=10, decimal_places=2)
     # Relation CIF : chaque produit appartient à 1 catégorie (0,N côté catégorie 1,1 côté produit)→
-    categorie = models.ForeignKey(Categorie, on_delete=models.CASCADE, related_name="produit_categorie",null=True,
-blank=True)
+    categorie = models.ForeignKey(Categorie, on_delete=models.CASCADE, related_name="produit_categorie",null=True,blank=True)
+    def __str__(self):
+        return self.intituleProd
 
-def __str__(self):
-    return self.intituleProd
+class Rayon(models.Model):
+    idRayon = models.AutoField(primary_key=True)
+    nomRayon = models.CharField(max_length=100)
+    def __str__(self):
+        return self.nomRayon
+
