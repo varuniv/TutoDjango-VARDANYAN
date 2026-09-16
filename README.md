@@ -8,6 +8,8 @@ Lancement :
 
     instalation des requirements: pip install -r requirements.txt
 
+    manage.py makemigrations
+
     manage.py migrate
 
     manage.py runserver
