@@ -24,3 +24,12 @@ couverture de home, contact et about
 ![alt text](images/couverture,home,about.png)
 
 TP1
+
+Pour exécuter les tests, vous pouvez utiliser la commande suivante dans votre terminal à la racine de votre projet DJANGO :
+
+./manage.py test monApp/tests
+
+Exectuin de coverage
+
+coverage run manage.py test monApp/tests
+coverage report
