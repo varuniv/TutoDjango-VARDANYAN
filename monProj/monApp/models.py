@@ -22,3 +22,10 @@ class Rayon(models.Model):
     def __str__(self):
         return self.nomRayon
 
+class Contenir(models.Model):
+    produits = models.ForeignKey(Produit,on_delete=models.CASCADE, related_name="produit",null=True,blank=True)
+    rayons = models.ForeignKey(Rayon, on_delete=models.CASCADE, related_name="rayons")
+    quantite = models.IntegerField()
+
+    class Meta:
+        unique_together = (('produits','rayons'))
