@@ -33,3 +33,6 @@ Exectuin de coverage
 
 coverage run manage.py test monApp/tests
 coverage report
+
+
+Début de Le shell Python et l’API DJANGO
