@@ -36,3 +36,6 @@ coverage report
 
 
 Début de Le shell Python et l’API DJANGO
+python manage.py shell
+
+Affichage des données dans les vues
