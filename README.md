@@ -39,3 +39,5 @@ Début de Le shell Python et l’API DJANGO
 python manage.py shell
 
 Affichage des données dans les vues
+
+fin de TP1
