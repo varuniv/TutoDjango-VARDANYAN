@@ -28,7 +28,7 @@ def ListStatut(request):
     stats = Statut.objects.all()
     html = "<h1>Liste des statuts</h1>"
     for stat in stats:
-        html += "<li>" + stat.libelle + "</li>"
+        html += "<li>" + stat.libelleStatut + "</li>"
     return HttpResponse(html)
 
 def ListRayons(request):

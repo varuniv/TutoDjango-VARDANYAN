@@ -2,7 +2,7 @@ from datetime import date
 from decimal import Decimal
 
 from django.test import TestCase
-from monApp.models import Categorie, Produit, Rayon, Statut
+from monApp.models import Categorie, Produit, Rayon, Statut, Contenir
 
 
 class CategorieModelTest(TestCase):
@@ -30,19 +30,19 @@ class CategorieModelTest(TestCase):
 
 class StatusModelTest(TestCase):
     def setUp(self):
-        self.statut = Statut.objects.create(libelle="En stock")
+        self.statut = Statut.objects.create(libelleStatut="En stock")
 
     def test_statut_creation(self):
-        self.assertEqual(self.statut.libelle, "En stock")
+        self.assertEqual(self.statut.libelleStatut, "En stock")
 
     def test_string_representation_statut(self):
         self.assertEqual(str(self.statut), "En stock")
 
     def test_statut_updating(self):
-        self.statut.libelle = "Plus en stock"
+        self.statut.libelleStatut = "Plus en stock"
         self.statut.save()
-        updated_statut = Statut.objects.get(idStatus=self.statut.idStatus)
-        self.assertEqual(updated_statut.libelle, "Plus en stock")
+        updated_statut = Statut.objects.get(idStatut=self.statut.idStatut)
+        self.assertEqual(updated_statut.libelleStatut, "Plus en stock")
 
     def test_statut_deletion(self):
         self.statut.delete()
@@ -73,11 +73,11 @@ class RayonModelTest(TestCase):
 class ProduitModelTest(TestCase):
     def setUp(self):
         self.categorie = Categorie.objects.create(nomCat="Catégorie produit")
-        self.statut = Statut.objects.create(libelle="Disponible")
+        self.statut = Statut.objects.create(libelleStatut="Disponible")
         self.produit = Produit.objects.create(
             intituleProd="Produit test",
             prixUnitaireProd=Decimal("12.50"),
-            dateFabrication=date(2024, 1, 15),
+            dateFabProd=date(2024, 1, 15),
             categorie=self.categorie,
             statut=self.statut,
         )
@@ -85,7 +85,7 @@ class ProduitModelTest(TestCase):
     def test_produit_creation(self):
         self.assertEqual(self.produit.intituleProd, "Produit test")
         self.assertEqual(self.produit.prixUnitaireProd, Decimal("12.50"))
-        self.assertEqual(self.produit.dateFabrication, date(2024, 1, 15))
+        self.assertEqual(self.produit.dateFabProd, date(2024, 1, 15))
         self.assertEqual(self.produit.categorie, self.categorie)
         self.assertEqual(self.produit.statut, self.statut)
 
@@ -104,3 +104,21 @@ class ProduitModelTest(TestCase):
         self.produit.delete()
         self.assertEqual(Produit.objects.count(), 0)
 
+class ContenirModelTest(TestCase):
+    def setUp(self):
+        self.categorie = Categorie.objects.create(nomCat="Catégorie produit")
+        self.statut = Statut.objects.create(libelleStatut="Disponible")
+        self.produit = Produit.objects.create(
+            intituleProd="Produit test",
+            prixUnitaireProd=Decimal("12.50"),
+            dateFabProd=date(2024, 1, 15),
+            categorie=self.categorie,
+            statut=self.statut,
+        )
+        self.rayon = Rayon.objects.create(nomRayon="Rayon Fruits")
+        self.contenir = Contenir.objects.create(produit=self.produit,
+                                                rayon=self.rayon,
+                                                Qte=5)
+
+    def test_string_representation_contenir(self):
+        self.assertEqual(str(self.contenir),f"Produit test dans Rayon Fruits (Qte: 5)")

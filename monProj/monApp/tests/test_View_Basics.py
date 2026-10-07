@@ -37,7 +37,7 @@ class AboutUsViewTest(TestCase):
 
 class ListProduitsViewTest(TestCase):
     def setUp(self):
-        self.produit = Produit.objects.create(intituleProd="ProduitTest", prixUnitaireProd=10.0, dateFabrication="2023-01-01")
+        self.produit = Produit.objects.create(intituleProd="ProduitTest", prixUnitaireProd=10.0, dateFabProd="2023-01-01")
 
     def test_listproduits_status_code(self):
         response = self.client.get(reverse('listproduits'))
@@ -64,7 +64,7 @@ class ListCategoriesViewTest(TestCase):
 
 class ListStatutViewTest(TestCase):
     def setUp(self):
-        self.statut = Statut.objects.create(libelle="StatutPourTests")
+        self.statut = Statut.objects.create(libelleStatut="StatutPourTests")
 
     def test_liststatut_status_code(self):
         response = self.client.get(reverse('liststatut'))
@@ -73,7 +73,7 @@ class ListStatutViewTest(TestCase):
     def test_liststatut_content(self):
         response = self.client.get(reverse('liststatut'))
         self.assertContains(response, '<h1>Liste des statuts</h1>')
-        self.assertContains(response, f"<li>{self.statut.libelle}</li>")
+        self.assertContains(response, f"<li>{self.statut.libelleStatut}</li>")
 
 class ListRayonsViewTest(TestCase):
     def setUp(self):

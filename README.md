@@ -41,3 +41,21 @@ python manage.py shell
 Affichage des données dans les vues
 
 fin de TP1
+
+TD2
+
+Introduction au site d’administration de DJANGO
+
+  commande pour creer une utilisateur admin : manage.py createsuperuser
+
+Rendre l’application modifiable via l’interface d’admin
+
+Qu'est-ce que le CRUD ?
+
+Personnaliser son interface d'administration
+
+Installation de DJANGO DEBUG TOOLBAR
+
+pip install django-debug-toolbar
+
+fin de TD2
