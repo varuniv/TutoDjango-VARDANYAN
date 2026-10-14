@@ -72,3 +72,12 @@ Héritage de templates
 Donnez du style à votre site grâce aux CSS 
 
 Fin de TP2
+Name               Stmts   Miss  Cover
+--------------------------------------
+monApp/admin.py       43     10    77%
+monApp/apps.py         3      0   100%
+monApp/models.py      35      0   100%
+monApp/urls.py         3      0   100%
+monApp/views.py       20      0   100%
+--------------------------------------
+TOTAL                104     10    90%

@@ -1,89 +1,94 @@
+from datetime import date
+from decimal import Decimal
+
 from django.test import TestCase
 from django.urls import reverse
-from monApp.models import Produit, Categorie, Statut, Rayon
+
+from monApp.models import Categorie, Produit, Rayon, Statut
+
 
 class HomeViewTest(TestCase):
+    def test_home_without_param(self):
+        response = self.client.get(reverse("home"))
 
-    # test de l'url de la page d'accueil
-    def test_home_status_code(self):
-        response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
-    # test du contenu de la page d'accueil
-    def test_home_content(self):
-        response = self.client.get(reverse('home'))
-        self.assertContains(response, '<h1>Bonjour  !</h1>')
-        response = self.client.get(reverse('home', args=['CriCri']))
-        self.assertContains(response, '<h1>Bonjour CriCri !</h1>')
+        self.assertTemplateUsed(response, "monApp/home.html")
+        self.assertIsNone(response.context["param"])
+        self.assertContains(response, "Hello Django")
 
-class ContactUsViewTest(TestCase):
-    # test de l'url de la page contact us
-    def test_contactus_status_code(self):
-        response = self.client.get(reverse('contactus'))
-        self.assertEqual(response.status_code, 200)
-    # test du contenu de la page contact us
-    def test_contactus_content(self):
-        response = self.client.get(reverse('contactus'))
-        self.assertContains(response, '<h1>Contact Us</h1>')
+    def test_home_with_param(self):
+        response = self.client.get(reverse("home", args=["CriCri"]))
 
-class AboutUsViewTest(TestCase):
-    # test de l'url de la page about us
-    def test_aboutus_status_code(self):
-        response = self.client.get(reverse('aboutus'))
         self.assertEqual(response.status_code, 200)
-    # test du contenu de la page about us
-    def test_aboutus_content(self):
-        response = self.client.get(reverse('aboutus'))
-        self.assertContains(response, '<h1>Something about us</h1>')
+        self.assertEqual(response.context["param"], "CriCri")
+        self.assertContains(response, "Hello CriCri")
+
+
+class AboutViewTest(TestCase):
+    def test_about_renders_about_template(self):
+        response = self.client.get(reverse("about"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "monApp/about.html")
+        self.assertContains(response, "Something about us")
+
+
+class ContactViewTest(TestCase):
+    def test_contact_renders_contact_template(self):
+        response = self.client.get(reverse("contact"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "monApp/contact.html")
+        self.assertContains(response, "Contact us")
+
 
 class ListProduitsViewTest(TestCase):
-    def setUp(self):
-        self.produit = Produit.objects.create(intituleProd="ProduitTest", prixUnitaireProd=10.0, dateFabProd="2023-01-01")
+    def test_list_produits_renders_and_passes_products(self):
+        produit = Produit.objects.create(
+            intituleProd="Produit test",
+            prixUnitaireProd=Decimal("10.00"),
+            dateFabProd=date(2023, 1, 1),
+        )
 
-    def test_listproduits_status_code(self):
-        response = self.client.get(reverse('listproduits'))
+        response = self.client.get(reverse("produits"))
+
         self.assertEqual(response.status_code, 200)
-
-    def test_listproduits_content(self):
-        response = self.client.get(reverse('listproduits'))
-        self.assertContains(response, '<h1>Liste des produits</h1>')
-        self.assertContains(response, f"<li>{self.produit.intituleProd}</li>")
+        self.assertTemplateUsed(response, "monApp/list_produits.html")
+        self.assertEqual(list(response.context["produits"]), [produit])
+        self.assertContains(response, "Produit test")
 
 
 class ListCategoriesViewTest(TestCase):
-    def setUp(self):
-        self.categorie = Categorie.objects.create(nomCat="CategoriePourTests")
+    def test_list_categories_renders_and_passes_categories(self):
+        categorie = Categorie.objects.create(nomCat="Catégorie test")
 
-    def test_listcategories_status_code(self):
-        response = self.client.get(reverse('listcategories'))
+        response = self.client.get(reverse("categories"))
+
         self.assertEqual(response.status_code, 200)
-            
-    def test_listcategories_content(self):
-        response = self.client.get(reverse('listcategories'))
-        self.assertContains(response, '<h1>Liste des catégories</h1>')
-        self.assertContains(response, f"<li>{self.categorie.nomCat}</li>")
+        self.assertTemplateUsed(response, "monApp/ListCategories.html")
+        self.assertEqual(list(response.context["categoires"]), [categorie])
+        self.assertContains(response, "Catégorie test")
 
-class ListStatutViewTest(TestCase):
-    def setUp(self):
-        self.statut = Statut.objects.create(libelleStatut="StatutPourTests")
 
-    def test_liststatut_status_code(self):
-        response = self.client.get(reverse('liststatut'))
+class ListStatutsViewTest(TestCase):
+    def test_list_statuts_renders_and_passes_statuses(self):
+        statut = Statut.objects.create(libelleStatut="Statut test")
+
+        response = self.client.get(reverse("statuts"))
+
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "monApp/ListStatuts.html")
+        self.assertEqual(list(response.context["statuts"]), [statut])
+        self.assertContains(response, "Statut test")
 
-    def test_liststatut_content(self):
-        response = self.client.get(reverse('liststatut'))
-        self.assertContains(response, '<h1>Liste des statuts</h1>')
-        self.assertContains(response, f"<li>{self.statut.libelleStatut}</li>")
 
 class ListRayonsViewTest(TestCase):
-    def setUp(self):
-        self.rayon = Rayon.objects.create(nomRayon="RayonPourTests")
+    def test_list_rayons_renders_and_passes_racks(self):
+        rayon = Rayon.objects.create(nomRayon="Rayon test")
 
-    def test_listrayons_status_code(self):
-        response = self.client.get(reverse('listrayons'))
+        response = self.client.get(reverse("rayons"))
+
         self.assertEqual(response.status_code, 200)
-
-    def test_listrayons_content(self):
-        response = self.client.get(reverse('listrayons'))
-        self.assertContains(response, '<h1>Liste des rayons</h1>')
-        self.assertContains(response, f"<li>{self.rayon.nomRayon}</li>")
+        self.assertTemplateUsed(response, "monApp/ListRayons.html")
+        self.assertEqual(list(response.context["rayons"]), [rayon])
+        self.assertContains(response, "Rayon test")
