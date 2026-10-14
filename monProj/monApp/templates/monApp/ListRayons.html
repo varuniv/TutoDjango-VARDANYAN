@@ -1,14 +1,24 @@
-<html>
-    <head>
-        <title>Mon app DJANGO</title>
-    </head>
-    <body>
-        <h1>Hello mes rayons !</h1>
-        <p>Mes rayons sont :</p>
-        <ul>
+{% extends 'monApp/base.html' %}
+
+{% block menu %}
+    <h1>Liste de mes rayons !</h1>
+{% endblock %}
+
+{% block contenu %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom du rayon</th>
+            </tr>
+        </thead>
+        <tbody>
             {% for ray in rayons %}
-            <li>{{ ray.nomRayon }}</li>
+            <tr>
+                <td>{{ ray.idRayon }}</td>
+                <td>{{ ray.nomRayon }}</td>
+            </tr>
             {% endfor %}
-        </ul>
-    </body>
-</html>
+        </tbody>
+    </table>
+{% endblock %}

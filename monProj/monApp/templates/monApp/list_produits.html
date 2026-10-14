@@ -1,8 +1,34 @@
 {% extends 'monApp/base.html' %}
 
+{% block menu %}
+    <h1>Liste de mes produits !</h1>
+{% endblock %}
+
 {% block contenu %}
-<h1>Hello les produits !</h1>
-<p>
+
+    <table class="table">
+        <thead>
+            <th>Id</th>
+            <th>Nom produit</th>
+            <th>Prix unitaire</th>
+            <th>Date fabrication</th>
+            <th>Catégorie</th>
+            <th>Statut</th>
+        </thead>
+        <tbody>
+            {% for prdt in produits %}
+            <tr>
+                <td>{{ prdt.refProd }} </td>
+                <td>{{ prdt.intituleProd }} </td>
+                <td>{{ prdt.prixUnitaireProd }} </td>
+                <td>{{ prdt.dateFabProd }} </td>
+                <td>{{ prdt.categorie }} </td>
+                <td>{{ prdt.statut }} </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p>
     J'ai
     {% if produits|length < 5 %}
     peu de
@@ -12,11 +38,5 @@
     beaucoup de
     {% endif %}
     produits préférés.
-</p>
-<p>Mes produits préférés sont :</p>
-<ul>
-    {% for prdt in produits %}
-    <li>{{ prdt.intituleProd | upper }}</li>
-    {% endfor %}
-</ul>
+    </p>
 {% endblock %}

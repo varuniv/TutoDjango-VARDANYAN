@@ -1,14 +1,24 @@
-<html>
-    <head>
-        <title>Mon app DJANGO</title>
-    </head>
-    <body>
-        <h1>Hello mes categories !</h1>
-        <p>Mes categories sont :</p>
-        <ul>
+{% extends 'monApp/base.html' %}
+
+{% block menu %}
+    <h1>Liste de mes catégories !</h1>
+{% endblock %}
+
+{% block contenu %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom catégorie</th>
+            </tr>
+        </thead>
+        <tbody>
             {% for cat in categoires %}
-            <li>{{ cat.nomCat }}</li>
+            <tr>
+                <td>{{ cat.idCat }}</td>
+                <td>{{ cat.nomCat }}</td>
+            </tr>
             {% endfor %}
-        </ul>
-    </body>
-</html>
+        </tbody>
+    </table>
+{% endblock %}

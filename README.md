@@ -69,4 +69,6 @@ Comprendre les Templates
 
 Héritage de templates
 
-Donnez du style à votre site grâce aux CSS (début)
+Donnez du style à votre site grâce aux CSS 
+
+Fin de TP2
