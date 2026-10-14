@@ -81,3 +81,8 @@ monApp/urls.py         3      0   100%
 monApp/views.py       20      0   100%
 --------------------------------------
 TOTAL                104     10    90%
+
+
+TD3
+Les vues génériques
+La vue générique de base

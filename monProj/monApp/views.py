@@ -1,8 +1,14 @@
 from django.shortcuts import HttpResponse, render
+from django.views.generic import TemplateView
 from .models import *
 
-def home(request, param=None):
-    return render(request, 'monApp/home.html', {'param':param})
+class HomeView(TemplateView):
+    template_name = "monApp/page_home.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['message'] = "Hello Django!"
+        return context
 
 def about(request):
     return render(request, 'monApp/about.html')
