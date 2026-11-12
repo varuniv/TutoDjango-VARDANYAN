@@ -13,5 +13,6 @@ urlpatterns = [
     path('categories/',views.ListCategories ,name='categories'),
     path('statuts/',views.ListStatuts,name='statuts'),
     path('rayons/',views.ListRayons,name='rayons'),
+    path("produit/<pk>/",views.ProduitDetailView.as_view()),
     
 ]
