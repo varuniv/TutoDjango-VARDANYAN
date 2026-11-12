@@ -88,3 +88,4 @@ Les vues génériques
 La vue générique de base
 La vue générique d’affichage
 La vue générique de détail
+Navigation et modèle d’URL
