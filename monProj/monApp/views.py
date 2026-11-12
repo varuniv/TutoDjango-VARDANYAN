@@ -3,18 +3,32 @@ from django.views.generic import TemplateView
 from .models import *
 
 class HomeView(TemplateView):
-    template_name = "monApp/page_home.html"
+    template_name = "monApp/home.html"
     
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['message'] = "Hello Django!"
+        if 'param' in self.kwargs:
+            context['param'] = self.kwargs['param']
+        else:
+            context['param'] = "Django"
+        context['message'] = f"Hello {context['param']}"
         return context
 
-def about(request):
-    return render(request, 'monApp/about.html')
+class AboutView(TemplateView):
+    template_name = "monApp/home.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super(AboutView, self).get_context_data(**kwargs)
+        context['message'] = "Something about us"
+        return context
 
-def contact(request):
-    return render(request, 'monApp/contact.html')
+class ContactView(TemplateView):
+    template_name = "monApp/home.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super(ContactView, self).get_context_data(**kwargs)
+        context['message'] = "Contact Django"
+        return context
 
 def ListProduits(request):
     prdts = Produit.objects.all()
