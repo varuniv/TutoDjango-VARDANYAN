@@ -86,3 +86,5 @@ TOTAL                104     10    90%
 TD3
 Les vues génériques
 La vue générique de base
+La vue générique d’affichage
+La vue générique de détail

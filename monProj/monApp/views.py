@@ -1,5 +1,5 @@
 from django.shortcuts import HttpResponse, render
-from django.views.generic import TemplateView
+from django.views.generic import ListView, TemplateView
 from .models import *
 
 class HomeView(TemplateView):
@@ -30,9 +30,14 @@ class ContactView(TemplateView):
         context['message'] = "Contact Django"
         return context
 
-def ListProduits(request):
-    prdts = Produit.objects.all()
-    return render(request, 'monApp/list_produits.html',{'produits': prdts})
+class ProduitListView(ListView):
+    model = Produit
+    template_name = "monApp/list_produits.html"
+    context_object_name = "produits"
+    def get_context_data(self, **kwargs):
+        context = super(ProduitListView, self).get_context_data(**kwargs)
+        context['titremenu'] = "Liste de mes produits !"
+        return context
 
 def ListCategories(request):
     cats = Categorie.objects.all()
