@@ -1,0 +1,16 @@
+{% extends 'monApp/base.html' %}
+
+{% block menu %}
+<h1>{{titremenu}}</h1>
+{% endblock %}
+{% block contenu %}
+
+<a href="{% url 'rayons' %}">Retour à la liste des rayons</a>
+
+<h2>{{ rayons.nomRayon }}</h2>
+
+<ul>
+    <li>Id rayon : {{ rayons.idRayon }} </li>
+</ul>
+
+{% endblock %}

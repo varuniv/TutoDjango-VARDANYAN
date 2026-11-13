@@ -13,9 +13,9 @@
             </tr>
         </thead>
         <tbody>
-            {% for cat in categoires %}
+            {% for cat in categories %}
             <tr>
-                <td>{{ cat.idCat }}</td>
+                <td><a href="{% url 'detailCategorie' cat.idCat %}">{{ cat.idCat }}</a></td>
                 <td>{{ cat.nomCat }}</td>
             </tr>
             {% endfor %}

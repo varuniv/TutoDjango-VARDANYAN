@@ -9,10 +9,15 @@ urlpatterns = [
     path("home", views.HomeView.as_view(), name="home"),
     path("about/", views.AboutView.as_view(), name="about"),
     path("contact/", views.ContactView.as_view(), name="contact"),
-    path('produits/', views.ProduitListView.as_view(), name='produits'),
-    path('categories/',views.ListCategories ,name='categories'),
-    path('statuts/',views.ListStatuts,name='statuts'),
-    path('rayons/',views.ListRayons,name='rayons'),
-    path("produit/<pk>/",views.ProduitDetailView.as_view()),
+    path("produits/",views.ProduitListView.as_view(),name="listProduits"),
+    path('categories/',views.CategorieListView.as_view(),name='categories'),
+    path('statuts/',views.StatutListView.as_view(),name='statuts'),
+    path('rayons/',views.RayonListView.as_view(),name='rayons'),
+    path("produit/<pk>/" ,views.ProduitDetailView.as_view(), name="detailProduit"),
+    path("categorie/<pk>/" ,views.CategorieDetailView.as_view(), name="detailCategorie"),
+    path("statut/<pk>/" ,views.StatutDetailView.as_view(), name="detailStatut"),
+    path("rayon/<pk>/" ,views.RayonDetailView.as_view(), name="detailRayon"),
+    
+
     
 ]
