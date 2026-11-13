@@ -1,6 +1,7 @@
 from datetime import date
 from decimal import Decimal
 
+from django.core import mail
 from django.test import TestCase
 from django.urls import reverse
 
@@ -15,6 +16,7 @@ class HomeViewTest(TestCase):
         self.assertTemplateUsed(response, "monApp/home.html")
         self.assertIsNone(response.context["param"])
         self.assertContains(response, "Hello Django")
+        self.assertNotContains(response, 'name="email"')
 
     def test_home_with_param(self):
         response = self.client.get(reverse("home", args=["CriCri"]))
@@ -22,7 +24,6 @@ class HomeViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["param"], "CriCri")
         self.assertContains(response, "Hello CriCri")
-
 
 class AboutViewTest(TestCase):
     def test_about_renders_about_template(self):
@@ -38,8 +39,43 @@ class ContactViewTest(TestCase):
         response = self.client.get(reverse("contact"))
 
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "monApp/contact.html")
-        self.assertContains(response, "Contact us")
+        self.assertTemplateUsed(response, "monApp/home.html")
+        self.assertContains(response, "Contact us!")
+        self.assertContains(response, 'name="email"')
+        self.assertContains(response, 'name="csrfmiddlewaretoken"')
+
+    def test_invalid_contact_post_renders_errors_without_sending_email(self):
+        response = self.client.post(
+            reverse("contact"),
+            {"name": "", "email": "not-an-email", "message": "Bonjour"},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("email", response.context["form"].errors)
+        self.assertEqual(response.context["form"].data["message"], "Bonjour")
+        self.assertEqual(len(mail.outbox), 0)
+
+    def test_valid_contact_post_sends_email_and_redirects(self):
+        response = self.client.post(
+            reverse("contact"),
+            {"name": "", "email": "visiteur@example.com", "message": "Bonjour"},
+        )
+
+        self.assertRedirects(response, reverse("email-sent"))
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(
+            mail.outbox[0].subject,
+            "Message from anonyme via monProj Contact form",
+        )
+        self.assertEqual(mail.outbox[0].body, "Bonjour")
+        self.assertEqual(mail.outbox[0].to, ["admin@monApp.com"])
+
+    def test_email_sent_page_renders_confirmation(self):
+        response = self.client.get(reverse("email-sent"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "monApp/home.html")
+        self.assertContains(response, "Message envoyé")
 
 
 class ListProduitsViewTest(TestCase):

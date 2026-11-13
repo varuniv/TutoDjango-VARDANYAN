@@ -19,10 +19,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item d-flex">
+                        <a class="nav-link" href="{% url 'home' %}">Accueil</a>
                         <a class="nav-link" href="{% url 'listProduits' %}">Produits</a>
                         <a class="nav-link" href="{% url 'categories' %}">Catégories</a>
                         <a class="nav-link" href="{% url 'statuts' %}">Statuts</a>
                         <a class="nav-link" href="{% url 'rayons' %}">Rayons</a>
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
                     </li>
                 </ul>
             </div>
@@ -39,7 +42,7 @@
 
         <footer class="footer">
             <div class="container">
-                <p>&copy; Copyright {% now "Y" %} by Titof Produition Copyrigh (c)</p>
+                <p>&copy; Copyright {% now "Y" %} by Me (c)</p>
             </div>
         </footer>
     </body>

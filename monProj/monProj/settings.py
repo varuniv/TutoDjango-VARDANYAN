@@ -130,11 +130,7 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
 
-MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
-    },
-}
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 NTERNAL_IPS = [
 "127.0.0.1"

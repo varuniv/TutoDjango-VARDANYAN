@@ -1,8 +1,17 @@
-<html>
-    <head>
-        <title>Mon app DJANGO</title>
-    </head>
-    <body>
-        <h1> {{message}}</h1>
-    </body>
-</html>
+{% extends 'monApp/base.html' %}
+
+{% block contenu %}
+    {% if param %}
+        <h1>Hello {{ param }}!</h1>
+    {% else %}
+        <h1>{{ message }}</h1>
+    {% endif %}
+
+    {% if form %}
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success mt-2">Envoyer</button>
+        </form>
+    {% endif %}
+{% endblock %}

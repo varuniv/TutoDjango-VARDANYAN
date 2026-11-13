@@ -1,35 +1,52 @@
-from django.shortcuts import HttpResponse, render
-from django.template import context
+from django.core.mail import send_mail
+from django.shortcuts import redirect, render
 from django.views.generic import DetailView, ListView, TemplateView
+
+from .forms import ContactUsForm
 from .models import *
+
 
 class HomeView(TemplateView):
     template_name = "monApp/home.html"
-    
+
     def get_context_data(self, **kwargs):
-        context = super(HomeView, self).get_context_data(**kwargs)
-        if 'param' in self.kwargs:
-            context['param'] = self.kwargs['param']
-        else:
-            context['param'] = "Django"
-        context['message'] = f"Hello {context['param']}"
+        context = super().get_context_data(**kwargs)
+        context["param"] = self.kwargs.get("param")
+        context["message"] = f"Hello {context['param'] or 'Django'}"
         return context
+
 
 class AboutView(TemplateView):
     template_name = "monApp/home.html"
-    
+
     def get_context_data(self, **kwargs):
-        context = super(AboutView, self).get_context_data(**kwargs)
-        context['message'] = "Something about us"
+        context = super().get_context_data(**kwargs)
+        context["message"] = "Something about us"
         return context
 
-class ContactView(TemplateView):
-    template_name = "monApp/home.html"
-    
-    def get_context_data(self, **kwargs):
-        context = super(ContactView, self).get_context_data(**kwargs)
-        context['message'] = "Contact Django"
-        return context
+
+def ContactView(request):
+    message = "Contact us!"
+    if request.method == "POST":
+        form = ContactUsForm(request.POST)
+        if form.is_valid():
+            sender_name = form.cleaned_data["name"] or "anonyme"
+            send_mail(
+                subject=f"Message from {sender_name} via monProj Contact form",
+                message=form.cleaned_data["message"],
+                from_email=form.cleaned_data["email"],
+                recipient_list=["admin@monApp.com"],
+            )
+            return redirect("email-sent")
+    else:
+        form = ContactUsForm()
+
+    return render(
+        request,
+        "monApp/home.html",
+        {"message": message, "form": form},
+    )
+
 
 class ProduitListView(ListView):
     model = Produit
@@ -103,3 +120,7 @@ class RayonDetailView(DetailView):
         context = super(RayonDetailView, self).get_context_data(**kwargs)
         context['titremenu'] = "Détail du rayon"
         return context
+
+
+def EmailSentView(request):
+    return render(request, "monApp/home.html", {"message": "Message envoyé"})
