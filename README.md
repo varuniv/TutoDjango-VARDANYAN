@@ -90,3 +90,6 @@ La vue générique d’affichage
 La vue générique de détail
 Navigation et modèle d’URL
 Premier formulaire DJANGO
+
+
+TP3

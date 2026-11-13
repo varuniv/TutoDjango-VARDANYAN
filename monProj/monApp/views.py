@@ -2,7 +2,7 @@ from django.core.mail import send_mail
 from django.shortcuts import redirect, render
 from django.views.generic import DetailView, ListView, TemplateView
 
-from .forms import ContactUsForm
+from .forms import *
 from .models import *
 
 
@@ -124,3 +124,10 @@ class RayonDetailView(DetailView):
 
 def EmailSentView(request):
     return render(request, "monApp/home.html", {"message": "Message envoyé"})
+
+
+
+def ProduitCreate(request):
+    form = ProduitForm()
+    titremenu = "Création d'un nouveau produit"
+    return render(request, "monApp/create_produit.html", {'titremenu':titremenu,'form': form})
